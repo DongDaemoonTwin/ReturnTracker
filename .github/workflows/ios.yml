@@ -1,0 +1,19 @@
+name: iOS Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-for-testing:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build app and tests
+        run: >-
+          xcodebuild build-for-testing
+          -project ReturnTracker.xcodeproj
+          -scheme ReturnTracker
+          -destination 'generic/platform=iOS Simulator'
+          CODE_SIGNING_ALLOWED=NO

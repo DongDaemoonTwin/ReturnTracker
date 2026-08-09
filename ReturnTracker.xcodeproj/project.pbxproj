@@ -1,0 +1,431 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* ReturnTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* ReturnTrackerApp.swift */; };
+		A10000000000000000000002 /* ReturnStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* ReturnStatus.swift */; };
+		A10000000000000000000003 /* ReturnItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* ReturnItem.swift */; };
+		A10000000000000000000004 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* HomeView.swift */; };
+		A10000000000000000000005 /* ReturnItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* ReturnItemRow.swift */; };
+		A10000000000000000000006 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* AddItemView.swift */; };
+		A10000000000000000000007 /* ReturnDeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* ReturnDeadline.swift */; };
+		A10000000000000000000008 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* CurrencyFormatter.swift */; };
+		A10000000000000000000009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* Assets.xcassets */; };
+		A1000000000000000000000A /* ReturnDeadlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* ReturnDeadlineTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A30000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A40000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A50000000000000000000001;
+			remoteInfo = ReturnTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* ReturnTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnTrackerApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* ReturnStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnStatus.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* ReturnItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnItem.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* ReturnItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnItemRow.swift; sourceTree = "<group>"; };
+		A20000000000000000000006 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
+		A20000000000000000000007 /* ReturnDeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDeadline.swift; sourceTree = "<group>"; };
+		A20000000000000000000008 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
+		A20000000000000000000009 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A2000000000000000000000A /* ReturnDeadlineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnDeadlineTests.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* ReturnTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReturnTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000000C /* ReturnTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReturnTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000000D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A60000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A60000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A70000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A70000000000000000000002 /* ReturnTracker */,
+				A70000000000000000000009 /* ReturnTrackerTests */,
+				A7000000000000000000000A /* Products */,
+				A2000000000000000000000D /* README.md */,
+			);
+			sourceTree = "<group>";
+		};
+		A70000000000000000000002 /* ReturnTracker */ = {
+			isa = PBXGroup;
+			children = (
+				A70000000000000000000003 /* App */,
+				A70000000000000000000004 /* Models */,
+				A70000000000000000000005 /* Features */,
+				A70000000000000000000008 /* Utilities */,
+				A7000000000000000000000B /* Resources */,
+			);
+			path = ReturnTracker;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* ReturnTrackerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000003 /* ReturnItem.swift */,
+				A20000000000000000000002 /* ReturnStatus.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000005 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				A70000000000000000000006 /* Home */,
+				A70000000000000000000007 /* AddItem */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000006 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000004 /* HomeView.swift */,
+				A20000000000000000000005 /* ReturnItemRow.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000007 /* AddItem */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000006 /* AddItemView.swift */,
+			);
+			path = AddItem;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000008 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000008 /* CurrencyFormatter.swift */,
+				A20000000000000000000007 /* ReturnDeadline.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A70000000000000000000009 /* ReturnTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000A /* ReturnDeadlineTests.swift */,
+			);
+			path = ReturnTrackerTests;
+			sourceTree = "<group>";
+		};
+		A7000000000000000000000A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000B /* ReturnTracker.app */,
+				A2000000000000000000000C /* ReturnTrackerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A7000000000000000000000B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000009 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A50000000000000000000001 /* ReturnTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000001 /* Build configuration list for PBXNativeTarget "ReturnTracker" */;
+			buildPhases = (
+				A80000000000000000000001 /* Sources */,
+				A60000000000000000000001 /* Frameworks */,
+				A90000000000000000000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ReturnTracker;
+			productName = ReturnTracker;
+			productReference = A2000000000000000000000B /* ReturnTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A50000000000000000000002 /* ReturnTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA0000000000000000000002 /* Build configuration list for PBXNativeTarget "ReturnTrackerTests" */;
+			buildPhases = (
+				A80000000000000000000002 /* Sources */,
+				A60000000000000000000002 /* Frameworks */,
+				A90000000000000000000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB0000000000000000000001 /* PBXTargetDependency */,
+			);
+			name = ReturnTrackerTests;
+			productName = ReturnTrackerTests;
+			productReference = A2000000000000000000000C /* ReturnTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A40000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					A50000000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					A50000000000000000000002 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = A50000000000000000000001;
+					};
+				};
+			};
+			buildConfigurationList = AA0000000000000000000003 /* Build configuration list for PBXProject "ReturnTracker" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A70000000000000000000001;
+			productRefGroup = A7000000000000000000000A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A50000000000000000000001 /* ReturnTracker */,
+				A50000000000000000000002 /* ReturnTrackerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A90000000000000000000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000009 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A90000000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A80000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000006 /* AddItemView.swift in Sources */,
+				A10000000000000000000008 /* CurrencyFormatter.swift in Sources */,
+				A10000000000000000000004 /* HomeView.swift in Sources */,
+				A10000000000000000000003 /* ReturnItem.swift in Sources */,
+				A10000000000000000000005 /* ReturnItemRow.swift in Sources */,
+				A10000000000000000000007 /* ReturnDeadline.swift in Sources */,
+				A10000000000000000000001 /* ReturnTrackerApp.swift in Sources */,
+				A10000000000000000000002 /* ReturnStatus.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A80000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000000000000000000000A /* ReturnDeadlineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB0000000000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A50000000000000000000001 /* ReturnTracker */;
+			targetProxy = A30000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AC0000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ReturnTracker;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dongdaemoontwin.ReturnTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AC0000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ReturnTracker;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dongdaemoontwin.ReturnTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		AC0000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dongdaemoontwin.ReturnTrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReturnTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ReturnTracker";
+			};
+			name = Debug;
+		};
+		AC0000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dongdaemoontwin.ReturnTrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReturnTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ReturnTracker";
+			};
+			name = Release;
+		};
+		AC0000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AC0000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AA0000000000000000000001 /* Build configuration list for PBXNativeTarget "ReturnTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC0000000000000000000001 /* Debug */,
+				AC0000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0000000000000000000002 /* Build configuration list for PBXNativeTarget "ReturnTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC0000000000000000000003 /* Debug */,
+				AC0000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA0000000000000000000003 /* Build configuration list for PBXProject "ReturnTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC0000000000000000000005 /* Debug */,
+				AC0000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A40000000000000000000001 /* Project object */;
+}
+
