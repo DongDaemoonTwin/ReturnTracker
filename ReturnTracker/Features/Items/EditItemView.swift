@@ -1,19 +1,32 @@
 import SwiftData
 import SwiftUI
 
-struct AddItemView: View {
+struct EditItemView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @AppStorage("notificationsEnabled") private var notificationsEnabled = true
 
-    @State private var productName = ""
-    @State private var storeName = ""
-    @State private var priceText = ""
-    @State private var purchaseDate = Date.now
-    @State private var returnDeadline = Calendar.current.date(byAdding: .day, value: 14, to: .now) ?? .now
-    @State private var orderNumber = ""
-    @State private var note = ""
+    let item: ReturnItem
+
+    @State private var productName: String
+    @State private var storeName: String
+    @State private var priceText: String
+    @State private var purchaseDate: Date
+    @State private var returnDeadline: Date
+    @State private var orderNumber: String
+    @State private var note: String
     @State private var saveErrorMessage: String?
+
+    init(item: ReturnItem) {
+        self.item = item
+        _productName = State(initialValue: item.productName)
+        _storeName = State(initialValue: item.storeName)
+        _priceText = State(initialValue: NSDecimalNumber(decimal: item.price).stringValue)
+        _purchaseDate = State(initialValue: item.purchaseDate)
+        _returnDeadline = State(initialValue: item.returnDeadline)
+        _orderNumber = State(initialValue: item.orderNumber ?? "")
+        _note = State(initialValue: item.note ?? "")
+    }
 
     private var normalizedProductName: String {
         productName.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -39,21 +52,13 @@ struct AddItemView: View {
             Form {
                 Section("상품") {
                     TextField("상품명", text: $productName)
-                        .textInputAutocapitalization(.never)
-
                     TextField("구매처", text: $storeName)
-
                     TextField("구매 가격", text: $priceText)
                         .keyboardType(.numberPad)
                 }
 
                 Section("날짜") {
-                    DatePicker(
-                        "구매일",
-                        selection: $purchaseDate,
-                        displayedComponents: .date
-                    )
-
+                    DatePicker("구매일", selection: $purchaseDate, displayedComponents: .date)
                     DatePicker(
                         "반품 마감일",
                         selection: $returnDeadline,
@@ -64,26 +69,21 @@ struct AddItemView: View {
 
                 Section("선택 사항") {
                     TextField("주문번호", text: $orderNumber)
-
                     TextField("메모", text: $note, axis: .vertical)
                         .lineLimit(2...5)
                 }
             }
-            .navigationTitle("상품 추가")
+            .navigationTitle("상품 수정")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("취소") {
-                        dismiss()
-                    }
+                    Button("취소") { dismiss() }
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("저장") {
-                        save()
-                    }
-                    .fontWeight(.semibold)
-                    .disabled(!canSave)
+                    Button("저장") { save() }
+                        .fontWeight(.semibold)
+                        .disabled(!canSave)
                 }
             }
             .onChange(of: purchaseDate) { _, newPurchaseDate in
@@ -112,44 +112,39 @@ struct AddItemView: View {
     private func save() {
         guard let price = parsedPrice, canSave else { return }
 
-        let item = ReturnItem(
-            productName: normalizedProductName,
-            storeName: normalizedStoreName,
-            price: price,
-            purchaseDate: purchaseDate,
-            returnDeadline: returnDeadline,
-            orderNumber: orderNumber.nilIfBlank,
-            note: note.nilIfBlank
-        )
-        let history = ReturnStatusHistory(itemID: item.id, status: .keeping)
-
-        modelContext.insert(item)
-        modelContext.insert(history)
+        item.productName = normalizedProductName
+        item.storeName = normalizedStoreName
+        item.price = price
+        item.purchaseDate = purchaseDate
+        item.returnDeadline = returnDeadline
+        item.orderNumber = orderNumber.nilIfBlankForEdit
+        item.note = note.nilIfBlankForEdit
+        item.updatedAt = .now
 
         do {
             try modelContext.save()
-            scheduleNotifications(for: item)
+            updateNotifications()
             dismiss()
         } catch {
-            modelContext.delete(history)
-            modelContext.delete(item)
+            modelContext.rollback()
             saveErrorMessage = error.localizedDescription
         }
     }
 
-    private func scheduleNotifications(for item: ReturnItem) {
-        guard notificationsEnabled else { return }
+    private func updateNotifications() {
+        guard notificationsEnabled else {
+            NotificationService.shared.cancel(itemID: item.id)
+            return
+        }
 
         Task {
-            let granted = await NotificationService.shared.requestAuthorization()
-            guard granted else { return }
             await NotificationService.shared.schedule(for: item)
         }
     }
 }
 
 private extension String {
-    var nilIfBlank: String? {
+    var nilIfBlankForEdit: String? {
         let trimmed = trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmed.isEmpty ? nil : trimmed
     }
