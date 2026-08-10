@@ -1,19 +1,99 @@
-name: iOS Build
+name: iOS CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - "agent/**"
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-for-testing:
-    runs-on: macos-latest
+  test-and-screenshot:
+    runs-on: macos-26
+    timeout-minutes: 30
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+
     steps:
       - uses: actions/checkout@v4
-      - name: Build app and tests
-        run: >-
-          xcodebuild build-for-testing
-          -project ReturnTracker.xcodeproj
-          -scheme ReturnTracker
-          -destination 'generic/platform=iOS Simulator'
-          CODE_SIGNING_ALLOWED=NO
+
+      - name: Show build environment
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available
+
+      - name: Run unit tests
+        run: |
+          mkdir -p BuildArtifacts
+          xcodebuild test \
+            -project ReturnTracker.xcodeproj \
+            -scheme ReturnTracker \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            -resultBundlePath BuildArtifacts/Tests.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Select screenshot simulator
+        run: |
+          SIMULATOR_ID="$(xcrun simctl list devices available -j | jq -r '[.devices | to_entries[] | select(.key | contains("iOS")) | .value[] | select(.name == "iPhone 17")] | last | .udid')"
+          test -n "$SIMULATOR_ID"
+          test "$SIMULATOR_ID" != "null"
+          echo "SIMULATOR_ID=$SIMULATOR_ID" >> "$GITHUB_ENV"
+
+      - name: Build screenshot app
+        run: |
+          xcodebuild build \
+            -project ReturnTracker.xcodeproj \
+            -scheme ReturnTracker \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+            -derivedDataPath BuildArtifacts/DerivedData \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Capture key screens
+        run: |
+          set -euo pipefail
+          mkdir -p BuildArtifacts/Screenshots
+          xcrun simctl boot "$SIMULATOR_ID" || true
+          xcrun simctl bootstatus "$SIMULATOR_ID" -b
+          xcrun simctl install "$SIMULATOR_ID" BuildArtifacts/DerivedData/Build/Products/Debug-iphonesimulator/ReturnTracker.app
+          xcrun simctl ui "$SIMULATOR_ID" appearance light
+
+          capture_screen() {
+            local filename="$1"
+            shift
+            xcrun simctl launch --terminate-running-process "$SIMULATOR_ID" com.dongdaemoontwin.ReturnTracker "$@"
+            sleep 3
+            xcrun simctl io "$SIMULATOR_ID" screenshot "BuildArtifacts/Screenshots/$filename"
+          }
+
+          capture_screen 01-empty-home.png --screenshot-mode --screen=home --fixture=empty
+          capture_screen 02-sample-home.png --screenshot-mode --screen=home --fixture=sample
+          capture_screen 03-add-item.png --screenshot-mode --screen=add --fixture=empty
+          capture_screen 04-item-detail.png --screenshot-mode --screen=detail --fixture=sample
+
+          xcrun simctl ui "$SIMULATOR_ID" appearance dark
+          capture_screen 05-dark-home.png --screenshot-mode --screen=home --fixture=sample
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcode-test-results
+          path: BuildArtifacts/Tests.xcresult
+          if-no-files-found: warn
+
+      - name: Upload screenshots
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: return-tracker-screenshots
+          path: BuildArtifacts/Screenshots/*.png
+          if-no-files-found: error
