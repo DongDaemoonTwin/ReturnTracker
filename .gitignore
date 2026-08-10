@@ -1,13 +1,15 @@
 # Xcode
 DerivedData/
-build/
 *.xcuserstate
 xcuserdata/
 
-# Swift Package Manager
-.build/
-.swiftpm/
+# Android / Gradle
+.gradle/
+**/build/
+android/local.properties
+*.apk
+*.aab
 
-# macOS
+# Editors and OS
+.idea/
 .DS_Store
-
