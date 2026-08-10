@@ -196,8 +196,7 @@ struct ItemDetailView: View {
             try modelContext.save()
             updateNotifications()
         } catch {
-            item.status = previousStatus
-            modelContext.delete(history)
+            modelContext.rollback()
             errorMessage = error.localizedDescription
         }
     }

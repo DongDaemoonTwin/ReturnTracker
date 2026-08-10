@@ -11,7 +11,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("알림") {
+                Section {
                     Toggle("반품 마감 알림", isOn: $notificationsEnabled)
 
                     LabeledContent("시스템 권한", value: authorizationTitle)
@@ -21,6 +21,8 @@ struct SettingsView: View {
                             await requestAndSchedule()
                         }
                     }
+                } header: {
+                    Text("알림")
                 } footer: {
                     Text("허용하면 반품 마감 D-3, D-1, 당일 오전 9시에 알려드립니다. 권한이 거절된 경우 iPhone 설정에서 변경할 수 있습니다.")
                 }

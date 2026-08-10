@@ -176,8 +176,7 @@ struct HomeView: View {
             try modelContext.save()
             updateNotifications(for: item)
         } catch {
-            item.status = previousStatus
-            modelContext.delete(history)
+            modelContext.rollback()
             errorMessage = error.localizedDescription
         }
     }
@@ -240,5 +239,8 @@ private struct RefundPendingRow: View {
 
 #Preview {
     HomeView()
-        .modelContainer(for: ReturnItem.self, inMemory: true)
+        .modelContainer(
+            for: [ReturnItem.self, ReturnStatusHistory.self],
+            inMemory: true
+        )
 }
