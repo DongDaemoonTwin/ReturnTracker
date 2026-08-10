@@ -43,5 +43,13 @@ enum ReturnStatus: String, CaseIterable, Codable, Identifiable {
             "checkmark.circle.fill"
         }
     }
-}
 
+    var needsDeadlineReminders: Bool {
+        switch self {
+        case .keeping, .returnPlanned, .returnRequested:
+            true
+        case .shipped, .refundPending, .refunded:
+            false
+        }
+    }
+}

@@ -57,6 +57,52 @@ final class ReturnDeadlineTests: XCTestCase {
         )
     }
 
+    func testPostShipmentStatusesDoNotNeedDeadlineAttention() {
+        let deadline = date(year: 2026, month: 8, day: 9)
+        let now = date(year: 2026, month: 8, day: 9)
+
+        for status in [ReturnStatus.shipped, .refundPending, .refunded] {
+            XCTAssertFalse(
+                ReturnDeadline.needsAttention(
+                    deadline: deadline,
+                    status: status,
+                    now: now,
+                    calendar: calendar
+                )
+            )
+        }
+    }
+
+    func testNotificationScheduleCreatesD3D1AndDeadlineAtNine() {
+        let now = date(year: 2026, month: 8, day: 10, hour: 8)
+        let deadline = date(year: 2026, month: 8, day: 13)
+
+        let reminders = ReturnNotificationSchedule.reminderDates(
+            deadline: deadline,
+            now: now,
+            calendar: calendar
+        )
+
+        XCTAssertEqual(reminders.map { $0.offset }, [3, 1, 0])
+        XCTAssertEqual(calendar.component(.hour, from: reminders[0].date), 9)
+        XCTAssertEqual(calendar.component(.day, from: reminders[0].date), 10)
+        XCTAssertEqual(calendar.component(.day, from: reminders[1].date), 12)
+        XCTAssertEqual(calendar.component(.day, from: reminders[2].date), 13)
+    }
+
+    func testNotificationScheduleSkipsPastDeliveryTime() {
+        let now = date(year: 2026, month: 8, day: 10, hour: 10)
+        let deadline = date(year: 2026, month: 8, day: 13)
+
+        let reminders = ReturnNotificationSchedule.reminderDates(
+            deadline: deadline,
+            now: now,
+            calendar: calendar
+        )
+
+        XCTAssertEqual(reminders.map { $0.offset }, [1, 0])
+    }
+
     func testPriceParserAcceptsZeroAndFormattedLargePrice() {
         XCTAssertEqual(CurrencyFormatter.decimal(from: "0"), Decimal(0))
         XCTAssertEqual(CurrencyFormatter.decimal(from: "₩1,250,000원"), Decimal(1_250_000))

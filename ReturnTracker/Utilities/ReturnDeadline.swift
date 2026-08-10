@@ -32,8 +32,7 @@ enum ReturnDeadline {
         now: Date = .now,
         calendar: Calendar = .autoupdatingCurrent
     ) -> Bool {
-        guard status != .refunded else { return false }
+        guard status.needsDeadlineReminders else { return false }
         return daysRemaining(until: deadline, now: now, calendar: calendar) <= 3
     }
 }
-
