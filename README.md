@@ -35,6 +35,7 @@ cd android
 ```
 
 The debug APK is written to `android/app/build/outputs/apk/debug/app-debug.apk`.
+Successful Android GitHub Actions runs also provide it as the `ReturnTracker-debug-apk` artifact.
 
 ## Test
 
