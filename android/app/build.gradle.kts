@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.returntracker.android"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.returntracker.android"

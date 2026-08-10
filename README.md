@@ -23,7 +23,7 @@ No API keys, server, or third-party packages are required.
 ## Run on Android
 
 1. Open the `android` directory in Android Studio.
-2. Install Android SDK 35 if Android Studio requests it.
+2. Install Android SDK 36 if Android Studio requests it.
 3. Select the `app` configuration and an Android 6.0+ emulator or device.
 4. Press Run.
 
