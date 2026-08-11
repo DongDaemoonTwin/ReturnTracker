@@ -17,6 +17,11 @@
 		A10000000000000000000008 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* CurrencyFormatter.swift */; };
 		A10000000000000000000009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* Assets.xcassets */; };
 		A1000000000000000000000A /* ReturnDeadlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* ReturnDeadlineTests.swift */; };
+		B10000000000000000000001 /* ReturnItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* ReturnItemSource.swift */; };
+		B10000000000000000000002 /* PurchaseEmailParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000002 /* PurchaseEmailParser.swift */; };
+		B10000000000000000000003 /* GmailAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000003 /* GmailAPIClient.swift */; };
+		B10000000000000000000004 /* GmailOAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000004 /* GmailOAuthClient.swift */; };
+		B10000000000000000000005 /* PurchaseEmailParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000005 /* PurchaseEmailParserTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +48,12 @@
 		A2000000000000000000000B /* ReturnTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReturnTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000000000000000000000C /* ReturnTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReturnTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2000000000000000000000D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B20000000000000000000001 /* ReturnItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnItemSource.swift; sourceTree = "<group>"; };
+		B20000000000000000000002 /* PurchaseEmailParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseEmailParser.swift; sourceTree = "<group>"; };
+		B20000000000000000000003 /* GmailAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailAPIClient.swift; sourceTree = "<group>"; };
+		B20000000000000000000004 /* GmailOAuthClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GmailOAuthClient.swift; sourceTree = "<group>"; };
+		B20000000000000000000005 /* PurchaseEmailParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseEmailParserTests.swift; sourceTree = "<group>"; };
+		B20000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				A20000000000000000000003 /* ReturnItem.swift */,
+				B20000000000000000000001 /* ReturnItemSource.swift */,
 				A20000000000000000000002 /* ReturnStatus.swift */,
 			);
 			path = Models;
@@ -107,6 +119,7 @@
 			children = (
 				A70000000000000000000006 /* Home */,
 				A70000000000000000000007 /* AddItem */,
+				B70000000000000000000001 /* EmailSync */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -141,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				A2000000000000000000000A /* ReturnDeadlineTests.swift */,
+				B20000000000000000000005 /* PurchaseEmailParserTests.swift */,
 			);
 			path = ReturnTrackerTests;
 			sourceTree = "<group>";
@@ -158,8 +172,19 @@
 			isa = PBXGroup;
 			children = (
 				A20000000000000000000009 /* Assets.xcassets */,
+				B20000000000000000000006 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B70000000000000000000001 /* EmailSync */ = {
+			isa = PBXGroup;
+			children = (
+				B20000000000000000000002 /* PurchaseEmailParser.swift */,
+				B20000000000000000000003 /* GmailAPIClient.swift */,
+				B20000000000000000000004 /* GmailOAuthClient.swift */,
+			);
+			path = EmailSync;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,9 +287,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000006 /* AddItemView.swift in Sources */,
+				B10000000000000000000003 /* GmailAPIClient.swift in Sources */,
+				B10000000000000000000004 /* GmailOAuthClient.swift in Sources */,
 				A10000000000000000000008 /* CurrencyFormatter.swift in Sources */,
 				A10000000000000000000004 /* HomeView.swift in Sources */,
+				B10000000000000000000002 /* PurchaseEmailParser.swift in Sources */,
 				A10000000000000000000003 /* ReturnItem.swift in Sources */,
+				B10000000000000000000001 /* ReturnItemSource.swift in Sources */,
 				A10000000000000000000005 /* ReturnItemRow.swift in Sources */,
 				A10000000000000000000007 /* ReturnDeadline.swift in Sources */,
 				A10000000000000000000001 /* ReturnTrackerApp.swift in Sources */,
@@ -277,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000000000000000000000A /* ReturnDeadlineTests.swift in Sources */,
+				B10000000000000000000005 /* PurchaseEmailParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,8 +328,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ReturnTracker;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ReturnTracker/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dongdaemoontwin.ReturnTracker;
@@ -319,8 +349,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = ReturnTracker;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ReturnTracker/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dongdaemoontwin.ReturnTracker;
@@ -428,4 +458,3 @@
 	};
 	rootObject = A40000000000000000000001 /* Project object */;
 }
-

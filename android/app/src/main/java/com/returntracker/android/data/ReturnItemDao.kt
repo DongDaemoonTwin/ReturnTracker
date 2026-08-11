@@ -18,4 +18,7 @@ interface ReturnItemDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(item: ReturnItem)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM return_items WHERE sourceMessageId = :messageId)")
+    suspend fun containsSourceMessage(messageId: String): Boolean
 }

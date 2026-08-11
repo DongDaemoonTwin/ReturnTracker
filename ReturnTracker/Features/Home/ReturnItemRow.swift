@@ -26,6 +26,12 @@ struct ReturnItemRow: View {
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
+
+                if item.needsReview {
+                    Text("메일 자동 등록 · 정보 확인 필요")
+                        .font(.caption2)
+                        .foregroundStyle(.red)
+                }
             }
 
             Spacer(minLength: 8)
@@ -53,4 +59,3 @@ struct ReturnItemRow: View {
         }
     }
 }
-

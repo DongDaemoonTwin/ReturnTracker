@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.HourglassTop
@@ -26,12 +27,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,11 +64,22 @@ import java.time.LocalDate
 @Composable
 fun HomeScreen(
     items: List<ReturnItem>,
+    gmailSyncState: GmailSyncUiState,
     onAddItem: (AddReturnItemInput, (Result<Unit>) -> Unit) -> Unit,
+    onSyncGmail: () -> Unit,
+    onDismissSyncMessage: () -> Unit,
 ) {
     var isAddingItem by rememberSaveable { mutableStateOf(false) }
     var today by remember { mutableStateOf(LocalDate.now()) }
     val lifecycleOwner = LocalLifecycleOwner.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(gmailSyncState.message) {
+        gmailSyncState.message?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            onDismissSyncMessage()
+        }
+    }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -77,17 +94,33 @@ fun HomeScreen(
             TopAppBar(
                 title = { Text("반품 관리") },
                 actions = {
+                    IconButton(
+                        onClick = onSyncGmail,
+                        enabled = !gmailSyncState.isSyncing,
+                    ) {
+                        if (gmailSyncState.isSyncing) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(22.dp),
+                                strokeWidth = 2.dp,
+                            )
+                        } else {
+                            Icon(Icons.Default.Sync, contentDescription = "Gmail 동기화")
+                        }
+                    }
                     IconButton(onClick = { isAddingItem = true }) {
                         Icon(Icons.Default.Add, contentDescription = "상품 추가")
                     }
                 },
             )
         },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { padding ->
         if (items.isEmpty()) {
             EmptyState(
                 modifier = Modifier.padding(padding),
                 onAddItem = { isAddingItem = true },
+                onSyncGmail = onSyncGmail,
+                isSyncing = gmailSyncState.isSyncing,
             )
         } else {
             ReturnItemList(
@@ -110,6 +143,8 @@ fun HomeScreen(
 private fun EmptyState(
     modifier: Modifier = Modifier,
     onAddItem: () -> Unit,
+    onSyncGmail: () -> Unit,
+    isSyncing: Boolean,
 ) {
     Box(
         modifier = modifier.fillMaxSize().padding(32.dp),
@@ -136,8 +171,11 @@ private fun EmptyState(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
-            Button(onClick = onAddItem) {
-                Text("첫 상품 추가")
+            Button(onClick = onSyncGmail, enabled = !isSyncing) {
+                Text(if (isSyncing) "메일 확인 중…" else "Gmail에서 동기화")
+            }
+            OutlinedButton(onClick = onAddItem) {
+                Text("직접 추가")
             }
         }
     }
@@ -149,13 +187,20 @@ private fun ReturnItemList(
     today: LocalDate,
     contentPadding: PaddingValues,
 ) {
+    val pendingItems = remember(items) {
+        items.filter { it.status == ReturnStatus.RETURN_PLANNED }
+            .sortedBy(ReturnItem::returnDeadlineEpochDay)
+    }
+    val pendingIds = remember(pendingItems) { pendingItems.mapTo(mutableSetOf()) { it.id } }
     val attentionItems = remember(items, today) {
-        items.filter { ReturnDeadline.needsAttention(it.returnDeadline, it.status, today) }
+        items.filter {
+            it.id !in pendingIds && ReturnDeadline.needsAttention(it.returnDeadline, it.status, today)
+        }
     }
     val attentionIds = remember(attentionItems) { attentionItems.mapTo(mutableSetOf()) { it.id } }
-    val recentItems = remember(items, attentionIds) {
+    val recentItems = remember(items, attentionIds, pendingIds) {
         items.asSequence()
-            .filterNot { it.id in attentionIds }
+            .filterNot { it.id in attentionIds || it.id in pendingIds }
             .sortedByDescending(ReturnItem::createdAtMillis)
             .take(5)
             .toList()
@@ -171,15 +216,27 @@ private fun ReturnItemList(
         ),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
+        if (pendingItems.isNotEmpty()) {
+            item { SectionTitle("반품 대기") }
+            items(pendingItems, key = ReturnItem::id) { item ->
+                ReturnItemCard(item = item, today = today)
+            }
+        }
+
         if (attentionItems.isNotEmpty()) {
-            item { SectionTitle("반품 마감 임박") }
+            item { SectionTitle("반품 마감 임박", topSpacing = pendingItems.isNotEmpty()) }
             items(attentionItems, key = ReturnItem::id) { item ->
                 ReturnItemCard(item = item, today = today)
             }
         }
 
         if (recentItems.isNotEmpty()) {
-            item { SectionTitle("최근 등록", topSpacing = attentionItems.isNotEmpty()) }
+            item {
+                SectionTitle(
+                    "최근 등록",
+                    topSpacing = pendingItems.isNotEmpty() || attentionItems.isNotEmpty(),
+                )
+            }
             items(recentItems, key = ReturnItem::id) { item ->
                 ReturnItemCard(item = item, today = today)
             }
@@ -253,6 +310,13 @@ private fun ReturnItemCard(
                         text = item.status.title,
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                if (item.needsReview) {
+                    Text(
+                        text = "메일 자동 등록 · 정보 확인 필요",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.error,
                     )
                 }
             }
