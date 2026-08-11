@@ -15,6 +15,9 @@ final class ReturnItem {
     var createdAt: Date
     var updatedAt: Date
     var imageData: Data?
+    var sourceRawValue: String = ReturnItemSource.manual.rawValue
+    var sourceMessageID: String?
+    var needsReview: Bool = false
 
     init(
         id: UUID = UUID(),
@@ -28,7 +31,10 @@ final class ReturnItem {
         status: ReturnStatus = .keeping,
         createdAt: Date = .now,
         updatedAt: Date = .now,
-        imageData: Data? = nil
+        imageData: Data? = nil,
+        source: ReturnItemSource = .manual,
+        sourceMessageID: String? = nil,
+        needsReview: Bool = false
     ) {
         self.id = id
         self.productName = productName
@@ -42,6 +48,9 @@ final class ReturnItem {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.imageData = imageData
+        self.sourceRawValue = source.rawValue
+        self.sourceMessageID = sourceMessageID
+        self.needsReview = needsReview
     }
 
     var status: ReturnStatus {
@@ -51,5 +60,8 @@ final class ReturnItem {
             updatedAt = .now
         }
     }
-}
 
+    var source: ReturnItemSource {
+        ReturnItemSource(rawValue: sourceRawValue) ?? .manual
+    }
+}
